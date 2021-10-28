@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div id="app">
+		<Index v-for="item in list" :key="item.id" :item="item">
+		<ul>
+			<li v-for="(item,index) in menus" @click="selectIndex(index)" :class="{'on':currentIndex===index}">{{item}}</li>
+		</ul>
+	</div>
+	<script>
+		var Index = {
+			template:`<ul>
+				<li>{item.name}</li>
+			</ul>`,
+			props:['item']
+		}
+		new Vue({
+			el:'#app',
+			data:{
+				currentIndex:0,
+				menus:[111,222,333],
+				list:[
+					{id:1,name:111},
+					{id:2,name:222},
+					{id:3,name:333}
+				]
+			},
+			components:{
+				Index
+			},
+			methods:{
+				selectIndex(index){
+					this.currentIndex = index
+				}
+			}
+		})
+	</script>
+
+</body>
+</html>

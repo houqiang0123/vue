@@ -1,0 +1,43 @@
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<body>
+    <div id="app">
+        <p>初始值：{{name}}</p>
+        <p>翻转值：{{reverseStr()}}</p>
+        <p>计算属性翻转值：{{reverse}}</p>
+        <button  @click="setSeverseStr()">点击调用set方法</button>
+    </div>
+    <script>
+        let vm=new Vue({
+            el:'#app',
+            data:{
+                name:'Rose Jack',
+                firstName:'小',
+                lastName:'明'
+            },
+            methods:{
+                reverseStr(){
+                    return this.name.split(' ').reverse().join(' ');
+                },
+                setSeverseStr(){
+                    this.reverse='xiao ming';
+                }
+            },
+            //计算属性
+            computed:{
+                reverse:{
+                    get(){  //get方法
+                        //return this.name.split(' ').reverse().join(' ');
+                        return this.firstName+' '+this.lastName;
+                    },
+                    set(str){ //set方法
+                        let nameArr=str.split(' ');
+                        this.firstName=nameArr[0];
+                        this.lastName=nameArr[1];
+                        alert(this.firstName);
+                        alert(this.lastName);
+                    }
+                }
+            }
+        })
+    </script>
+</body>
