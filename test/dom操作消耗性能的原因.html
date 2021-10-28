@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- ... -->
+    <div>
+      <div class="app">
+        <div class="inner">我是内部元素</div>
+        <div class="aa">{{title}}</div>
+        ...
+        <div class="bb">{{title}}</div>
+      </div>
+    </div>
+    <script>
+      $(".app").css(background, "red");
+    </script>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          title: "我是标题", // 内存里面有一个虚拟dom
+        },
+      });
+    </script>
+  </body>
+</html>

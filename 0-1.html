@@ -1,0 +1,43 @@
+<h1 v-text="num"></h1>
+<p v-text="num"></p>
+<input v-model="num"/>
+
+<script type="text/javascript">
+	var obj = {_num : 0};
+Object.defineProperty(obj,"num",{
+	writeable: false,
+	get() {
+		console.log("get执行");
+		return obj._num;
+	},
+	set(v) {
+		console.log("set执行");
+		obj._num = v;
+		// vue中v-text指令的原理
+		var elems = document.querySelectorAll("*[v-text='num']");
+		for(var i = 0; i < elems.length; i++) {
+			elems[i].innerHTML = v;
+		}
+		// vue中v-model指令的原理,双向绑定
+		var els = document.querySelectorAll("*[v-model='num']");
+		// 获取所有属性为v-model的值为num的表单
+		for(var i = 0; i < els.length; i++) {
+			els[i].value = v;
+			// 当设置num时候,设置表的值也为 v;
+			els[i].oninput = function(e) {
+				// 当表单发生改变时候
+				obj.num = e.currentTarget.value;
+				// e.currentTarget 当前事件对应的对象
+				// 设置num的值为当前事件对象的值
+			}
+		}
+	}
+})
+// 定义objde num属性,当num值被设置时,执行set方法,被获取时执行get方法
+obj.num		// (get执行 0)	获取执行get方法
+obj.num	= 20	// (set执行 20)	设置执行set方法、
+console.log(obj)
+obj.num = 30
+console.log(obj)
+
+</script>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="./lib/vue.js"></script> 
+</head>
+<body>
+	<div id="app">
+		<div>
+		　　<input type="checkbox" @click="checkAll" v-model="checked">
+		　　<span>全选</span>
+		</div>
+		<ul>
+		　　<li v-for="(item,index) in list" :key="index" style="margin-top:20px;">
+		　　　　<input type="checkbox" v-model="checkModel" :value="item.id">
+		　　　　<span>{{item.name}}--</span>
+		　　　　<span>{{item.age}}--</span>
+		　　　　<span>{{item.money}}元</span>
+		　　　　<button @click="remove(index)" type="primary">删除</button>
+		　　</li>
+		</ul>
+		<button @click="getAll">获取所有的值</button>
+	</div>
+</body>
+<script>
+	new Vue({
+		el:'#app',
+		data:{
+	　　　　list:[
+	　　　　　　{id:1,name:"明明",age:23,money:100},
+	　　　　　　{id:2,name:"红红",age:18,money:200},
+	　　　　　　{id:3,name:"强强",age:29,money:300}
+	　　　　],
+	　　　　checked:false, //是否全选
+	　　　　checkModel:[] //双向数据绑定的数组，我是用的id
+		},
+		watch:{
+		　　checkModel(){
+		　　　　if(this.checkModel.length==this.list.length){
+		　　　　　　this.checked=true;
+		　　　　}else{
+		　　　　　　this.checked=false;
+		　　　　}
+				console.log(this.checkModel)
+		　　}
+		},
+		methods:{　
+			remove(index){
+				this.list.splice(index,1)
+				if(this.checkModel.length==this.list.length){
+		　　　　　　this.checked=true;
+		　　　　}else{
+		　　　　　　this.checked=false;
+		　　　　}
+			},　
+		　　checkAll(){
+		　　　　if(this.checked){
+		　　　　　　this.checkModel=[];
+		　　　　}else{
+		　　　　　　this.list.forEach((item)=>{
+		　　　　　　if(this.checkModel.indexOf(item.id)==-1){
+		　　　　　　　　this.checkModel.push(item.id)
+		　　　　　　}
+					console.log(this.checkModel)
+		　　　　　　})
+		　　　　}
+		　　},
+			getAll(){
+				console.log(this.checkModel)
+			}
+		}
+	})
+</script>
+
+</html>
